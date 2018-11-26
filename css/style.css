@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+.container{
+    border: 2px dotted #000000;
+    border-radius: 5px;
+}
+label {
+    font-weight: bolder;
+}
+::placeholder {
+    color: rgb(177, 250, 135) !important;
+    opacity: 3;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:  rgb(177, 250, 135) !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:  rgb(177, 250, 135) !important;
+    opacity:  3;
+ }
+ h1 {
+     text-align: center;
+     font-family: 'Poppins', sans-serif;
+     margin-top: 15px;
+ }
+ #msg {
+     height: 60px;
+ }
+ #grid-contatos tbody {
+     cursor: pointer;
+ }
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload{
+    width: 100%;
+}
+
+#img-uploadShow{
+    width: 100%;
+}
+
+.alterar, #btnInsert{
+    display: none;
+}
+.red{
+    color: rgb(255, 0, 242);
+}

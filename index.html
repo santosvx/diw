@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CRUD Series</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <!-- Alteração -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    
+    <!-- Alteração -->
+</head>
+
+<body onload="init()">
+    <h1>CRUD de SERIES</h1>
+
+    <!-- <div class="container">
+        <div class="row">
+            <div id="msg" class="col-sm-10 offset-sm-1 ">
+                <!-<div class="alert alert-warning">Serie não encontrada.</div>-
+            </div>
+        </div> -->
+
+        <!-- Inicio alterações -->
+
+        <div class="container">
+        <div class="row mt-3">
+            <div class="col-sm-2">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" id="btnNovo">
+                    Novo registro
+                </button>
+            </div>
+        </div>
+
+        <!-- Espacer -->
+        <div class="mt-3"></div>
+
+        <!-- Fim alterações -->
+
+        <!--<form id="form-series">
+            <div class="form-group row">
+                <div class="col-sm-2">
+                    <label for="inputId">Id</label>
+                    <input type="text" class="form-control" id="inputId" placeholder="ID" disabled>
+                </div>
+                <div class="col-sm-10">
+                    <label for="inputNome">Nome (*)</label>
+                    <input type="text" class="form-control" id="inputNome" required placeholder="Nome da serie">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2">
+                    <label for="inputImdbRating">IMDb Rating: (*)</label>
+                    <input type="text" class="form-control" id="inputImdbRating" required placeholder="IMDb Rating:">
+                </div>
+                <div class="col-sm-3">
+                    <label for="inputLancamento">Lançamento (*)</label>
+                    <input type="text" class="form-control" id="inputLancamento" required placeholder="Ano de lançamento">
+                </div>
+                <div class="col-sm-7">
+                    <label for="inputGenero">Genero (*)</label>
+                    <input type="text" class="form-control" id="inputGenero" required placeholder="Genero">
+                </div>
+                <div class="col-sm-12">
+                    <label for="inputAtores">Atores (*)</label>
+                    <input type="text" class="form-control" id="inputAtores" required placeholder="Atores principais">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <small>(*) Campos obrigatórios</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="button" class="btn btn-success" id="btnInsert" value="Inserir">
+                    <input type="button" class="btn btn-warning" id="btnUpdate" value="Alterar">
+                    <input type="button" class="btn btn-danger" id="btnDelete" value="Excluir">
+                    <input type="button" class="btn btn-secondary" id="btnClear" value="Limpar Form">
+                </div>
+            </div>
+        </form>-->
+
+        <!-- Inicio alterações -->
+
+        <!-- Modal 1 -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="modTitle"></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-series">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label for="inputId">ID</label>
+                                    <input type="text" class="form-control" id="inputId" placeholder="ID" disabled>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="inputNome">Nome <span class="red">*</span></label>
+                                    <input type="text" class="form-control" id="nome" placeholder="Nome da serie"
+                                        required>
+                                </div>
+                                <div class="col-sm-7">
+                                    <label for="url">URL <span class="red">*</span></label>
+                                    <input type="text" class="form-control" id="url" required placeholder="Informe a url da serie">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+
+                                <div class="col-sm-4">
+                                    <label for="imdb_rating">IMDb Rating <span class="red">*</span></label>
+                                    <input type="text" class="form-control" id="imdb_rating" required placeholder="IMDb Rating">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="lancamento">Ano de Lançamento <span class="red">*</span></label>
+                                    <input type="text" class="form-control" id="lancamento" required placeholder="Informe o ano de lançamento">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="genero">Genero <span class="red">*</span></label>
+                                    <input type="text" class="form-control" id="genero" required placeholder="Informe o Genero">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="atores">Atores <span class="red">*</span></label>
+                                    <input type="text" class="form-control" id="atores" required placeholder="Informe os atores">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Imagem</label>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-info btn-file">
+                                                Upload <input type="file" id="imgInp">
+                                            </span>
+                                        </span>
+                                        <input type="text" class="form-control" readonly>
+                                    </div>
+                                    <img id='img-upload' src="imgs/placeholder.gif" />
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <small><span class="red">*</span> Campos obrigatórios</small>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-success" id="btnInsert" value="Inserir">
+                        <input type="button" class="btn btn-sucess alterar" id="btnUpdate" value="Alterar">
+                        <input type="button" class="btn btn-primary alterar" id="btnDelete" value="Excluir">
+                        <input type="button" class="btn btn-secondary" id="btnClear" value="Limpar Form">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 2 -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="mod2Title">Visualizar um registro</span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-series">
+
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label for="inputIdShow">ID</label>
+                                    <input type="text" class="form-control" id="inputIdShow" disabled>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="inputNomeShow">Nome</label>
+                                    <input type="text" class="form-control" id="nomeShow" disabled>
+                                </div>
+                                <div class="col-sm-7">
+                                    <label for="urlShow">URL</label>
+                                    <input type="text" class="form-control" id="urlShow" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <label for="imdbratingShow">IMDb Rating</label>
+                                    <input type="text" class="form-control" id="imdbratingShow" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="lancamentoShow">Ano de lançamento</label>
+                                    <input type="text" class="form-control" id="lancamentoShow" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="generoShow">Genero</label>
+                                    <input type="text" class="form-control" id="generoShow" disabled>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="atoresShow">Atores</label>
+                                    <input type="text" class="form-control" id="atoresShow" disabled>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Imagem</label>
+                                    <img id='img-uploadShow' src="" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-sucess" id="btnGoUpdate" value="Alterar">
+                        <input type="button" class="btn btn-primary" id="btnGoDelete" value="Excluir">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim alterações -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="grid-series" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">IMDb Rating</th>
+                            <!--<th scope="col">Lançamento</th>
+                            <th scope="col">Genero</th>
+                            <th scope="col">Atores</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="table-series">
+                        <tr>
+                            <td scope="row">1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        Copyright © 2018 by Santos, Vinicius. All rigths reserved.
+    </div>
+
+    <script src="js/fakedb.js"></script>
+
+    <script>
+        var isAlterar = false;
+        var isExcluir = false;
+        function exibeSeries() {
+            // Remove todas as linhas do corpo da tabela
+            $("#table-series").html("");
+            // Popula a tabela com os registros do banco de dados
+            for (i = 0; i < db.data.length; i++) {
+                let series = db.data[i];
+                $("#table-series").append(`<tr><td>${series.id}</td><td>${series.nome}</td><td>${series.imdb_rating}</td><td><input type="button" class="btn btn-sucess" onclick="acaoAlterar()" value="Alterar"><input type="button" class="btn btn-primary" onclick="acaoExcluir(${series.id})" value="Excluir"></td></tr>`);
+            }
+        }
+
+        function init() {
+            // Adiciona funções para tratar os eventos 
+            $("#btnInsert").click(function () {
+                // Verfica se o formulário está preenchido corretamente
+                if (!$('#form-series')[0].checkValidity()) {
+                    displayMessage("Preencha o formulário corretamente.");
+                    return;
+                }
+                // Obtem os valores dos campos do formulários
+                let iNome = $('#nome').val();
+                let iUrl = $('#url').val();
+                let iImdbrating = $("#imdb_rating").val();
+                let iLancamento = $('#lancamento').val();
+                let iGenero = $('#genero').val();
+                let iAtores = $('#atores').val();
+                let iImg = imgb64;
+                console.log(iImg);
+                let series = { nome: iNome, url: iUrl, imdb_rating: iImdbrating, lancamento: iLancamento, genero: iGenero, atores: iAtores, img: iImg };
+                insertSeries(series);
+                // Reexibe os contatos
+                exibeSeries();
+                // Limpa o formulario
+                $("#form-series")[0].reset();
+                $('#exampleModal').modal('toggle');
+            });
+            // Intercepta o click do botão Alterar
+            $("#btnUpdate").click(function () {
+                // Obtem os valores dos campos do formulário
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione uma serie para ser alterada.");
+                    return;
+                }
+                let iNome = $('#nome').val();
+                let iUrl = $('#url').val();
+                let iImdbrating = $("#imdb_rating").val();
+                let iLancamento = $('#lancamento').val();
+                let iGenero = $('#genero').val();
+                let iAtores = $('#atores').val();
+                let iImg = imgb64;
+                console.log(iImg);
+                let series = { nome: iNome, url: iUrl, imdb_rating: iImdbrating, lancamento: iLancamento, genero: iGenero, atores: iAtores, img: iImg };
+                updateSeries(parseInt(campoId), series);
+                // Reexibe os contatos
+                exibeSeries();
+                // Limpa o formulario
+                $("#form-series")[0].reset();
+                $('#exampleModal').modal('toggle');
+            });
+            // Intercepta o click do botão Excluir (alterar modal)
+            $("#btnDelete").click(function () {
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione uma serie a ser excluída.");
+                    return;
+                }
+                deleteSeries(parseInt(campoId));
+                // Reexibe os contatos
+                exibeSeries();
+                // Limpa o formulario
+                $("#form-livros")[0].reset();
+                $('#exampleModal').modal('toggle');
+            });
+            // Intercepta o click do botão Excluir (visualizar modal)
+            $("#btnGoDelete").click(function () {
+                let campoId = $("#inputIdShow").val();
+                if (campoId == "") {
+                    return;
+                }
+                deleteSeries(parseInt(campoId));
+                // Reexibe os contatos
+                exibeSeries();
+                // Fecha o modal
+                $('#exampleModal2').modal('toggle');
+            });
+            // Intercepta o click do botão Listar Contatos
+            $("#btnClear").click(function () {
+                $("#form-series")[0].reset();
+            });
+            // Intercepta o click do botão ir para update
+            $("#btnGoUpdate").click(function () {
+                $('#exampleModal2').modal('toggle');
+                let id = $('#inputIdShow').val();
+                modal1Update(id);
+            });
+            // Intercepta o click do botão Novo Registro
+            $("#btnNovo").click(function () {
+                $("#form-series")[0].reset();
+                $('#exampleModal').modal('show');
+                $('#btnInsert').css("display", "block");
+                $('#modTitle').text("Criar novo registro");
+            });
+            // Escuta o evento do fechamendo do modal-1
+            $('#exampleModal').on('hidden.bs.modal', function () {
+                $('#btnInsert').css("display", "none");
+                $('.alterar').css("display", "none");
+                $('#img-upload').attr('src', "imgs/placeholder.gif");
+                imgb64 = "imgs/placeholder.gif";
+                $('#modTitle').text("");
+            });
+            // Escuta o evento do fechamendo do modal-2
+            $('#exampleModal').on('hidden.bs.modal', function () {
+                // TODO
+            });
+            // Oculta a mensagem de aviso após alguns segundos
+            $('#msg').bind("DOMSubtreeModified", function () {
+                window.setTimeout(function () {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                        $(this).remove();
+                    });
+                }, 5000);
+            });
+            // Preenche o formulário quando o usuario clicar em uma linha da tabela 
+            $("#grid-series").on("click", "tr", function (e) {
+                let id = this.childNodes[0].firstChild.nodeValue;
+                // let index = db.data.map(obj => obj.id).indexOf(parseInt(id));
+                let series = db.data[db.data.map(obj => obj.id).indexOf(parseInt(id))];
+                if (isAlterar) {
+                    modal1Update(id)
+                    isAlterar = false;
+                } else if (isExcluir) {
+                    isExcluir = false;
+                } else {
+                    $('#exampleModal2').modal('show');
+                    $('#inputIdShow').val(id);
+                    $('#nomeShow').val(series.nome);
+                    $('#urlShow').val(series.url);
+                    $("#imdbratingShow").val(series.imdb_rating);
+                    $('#lancamentoShow').val(series.lancamento);
+                    $('#generoShow').val(series.genero);
+                    $('#atoresShow').val(series.atores);
+                    $('#img-uploadShow').attr('src', series.imagem);
+                }
+            });
+            exibeSeries();
+        }
+        function modal1Update(id) {
+            let series = db.data[db.data.map(obj => obj.id).indexOf(parseInt(id))];
+            $('#exampleModal').modal('show');
+            $('.alterar').css("display", "block");
+            $('#modTitle').text("Alterar um registro");
+            $('#inputId').val(id);
+            $('#nome').val(series.nome);
+            $('#url').val(series.url);
+            $("#imdb_rating").val(series.imdb_rating);
+            $('#lancamento').val(series.lancamento);
+            $('#genero').val(series.genero);
+            $('#atores').val(series.atores);
+            $('#img-upload').attr('src', series.imagem);
+        }
+    </script>
+
+    <!--<script>
+        function exibeSeries() {
+            // Remove todas as linhas do corpo da tabela
+            $("#table-series").html("");
+
+            // Popula a tabela com os registros do banco de dados
+            for (i = 0; i < db.data.length; i++) {
+                let series = db.data[i];
+                $("#table-series").append(`<tr><td scope="row">${series.id}</td><td>${series.nome}</td><td>${series.imdbrating}</td><td>${series.lancamento}</td><td>${series.genero}</td><td>${series.atores}</td></tr>`);
+            }
+        }
+
+        function init() {
+            // Adiciona funções para tratar os eventos 
+            $("#btnInsert").click(function () {
+                // Verfica se o formulário está preenchido corretamente
+                if (!$('#form-series')[0].checkValidity()) {
+                    displayMessage("Preencha o formulário corretamente.");
+                    return;
+                }
+
+                // Obtem os valores dos campos do formulário
+                let campoNome = $("#inputNome").val();
+                let campoImdbRating = $("#inputImdbRating").val();
+                let campoLancamento = $('#inputLancamento').val();
+                let campoGenero = $('#inputGenero').val();
+                let campoAtores = $('#inputAtores').val();
+                let series = { nome: campoNome, imdbrating: campoImdbRating, lacamento: campoLancamento, genero: campoGenero, atores: campoAtores };
+
+                insertSeries(series);
+
+                // Reexibe as series
+                exibeSeries();
+
+                // Limpa o formulario
+                $("#form-series")[0].reset();
+            });
+
+            // Intercepta o click do botão Alterar
+            $("#btnUpdate").click(function () {
+                // Obtem os valores dos campos do formulário
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione uma serie para ser alterado.");
+                    return;
+                }
+                let campoNome = $("#inputNome").val();
+                let campoImdbRating = $("#inputImdbRating").val();
+                let campoLancamento = $('#inputLancamento').val();
+                let campoGenero = $('#inputGenero').val();
+                let campoAtores = $('#inputAtores').val();
+                let series = { nome: campoNome, imdbrating: campoImdbRating, lacamento: campoLancamento, genero: campoGenero, atores: campoAtores };
+
+                updateSeries(parseInt(campoId), series);
+
+                // Reexibe as series
+                exibeSeries();
+
+                // Limpa o formulario
+                $("#form-series")[0].reset();
+            });
+
+            // Intercepta o click do botão Excluir
+            $("#btnDelete").click(function () {
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione uma Serie a ser excluído.");
+                    return;
+                }
+                deleteSeries(parseInt(campoId));
+
+                // Reexibe os series
+                exibeSeries();
+
+                // Limpa o formulario
+                $("#form-series")[0].reset();
+            });
+
+            // Intercepta o click do botão Listar Series
+            $("#btnClear").click(function () {
+                $("#form-series")[0].reset();
+            });
+
+            // Oculta a mensagem de aviso após alguns segundos
+            $('#msg').bind("DOMSubtreeModified", function () {
+                window.setTimeout(function () {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                        $(this).remove();
+                    });
+                }, 5000);
+            });
+
+            // Preenche o formulário quando o usuario clicar em uma linha da tabela 
+            $("#grid-series").on("click", "tr", function (e) {
+                let linhaSeries = this;
+                $("#inputId").val(linhaSeries.childNodes[0].firstChild.nodeValue);
+                $("#inputNome").val(linhaSeries.childNodes[1].firstChild.nodeValue);
+                $("#inputImdbRating").val(linhaSeries.childNodes[2].firstChild.nodeValue);
+                $("#inputLancamento").val(linhaSeries.childNodes[3].firstChild.nodeValue);
+                $("#inputGenero").val(linhaSeries.childNodes[4].firstChild.nodeValue);
+                $("#inputAtores").val(linhaSeries.childNodes[5].firstChild.nodeValue);
+            });
+
+            exibeSeries();
+        }
+    </script>-->
+
+    <script>
+    
+    var imgb64 = null;
+    var changed = false;
+
+$(document).ready(function () {
+    $(document).on('change', '.btn-file :file', function () {
+        var input = $(this),
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [label]);
+    });
+
+    $('.btn-file :file').on('fileselect', function (event, label) {
+
+        var input = $(this).parents('.input-group').find(':text'),
+            log = label;
+
+        if (input.length) {
+            input.val(log);
+        } else {
+            if (log) alert(log);
+        }
+
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                imgb64 = e.target.result;
+                $('#img-upload').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function () {
+        changed = true;
+        readURL(this);
+    });
+});
+
+    </script>
+
+</body>
+
+</html>
