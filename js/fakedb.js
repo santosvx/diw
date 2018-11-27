@@ -2505,40 +2505,45 @@ var dbfake = {
 }
 
 
+
 // Caso exista no Local Storage, recupera os dados salvos
-var db = JSON.parse(localStorage.getItem('db'));
+var db = JSON.parse(localStorage.getItem('dbfake'));
 if (!db) {
     db = dbfake
 };
-
+console.log(db);
 // Exibe mensagem em um elemento de ID msg
 function displayMessage(msg) {
     $('#msg').html('<div class="alert alert-warning">' + msg + '</div>');
 }
 
-function insertSerie(series) {
+function insertSeries(series) {
+
+    let novoId;
 
 	// Verificar se existe algum dado no LocalStorage
 	if (db.data.length == 0) {
-		var novoId = 1;
+		novoId = 1;
 	}
 	else {
 		// Calcula novo ID a parti do último ID existente
-		var novoId = db.data[db.data.length - 1].id + 1;
+		novoId = db.data[db.data.length - 1].id + 1;
 	}
     // Calcula novo Id a partir do último código existente no array
-    let novoId = db.data[db.data.length - 1].id + 1;
+    // novoId = db.data[db.data.length - 1].id + 1;
     
     let novaSerie = {
         "id": novoId,
         "nome": series.nome,
         "url": series.url,
-        "imdb_rating": series.imdbrating,
+        "imdb_rating": series.imdb_rating,
         "lancamento": series.lancamento,
         "genero": series.genero,
         "atores": series.atores,
         "imagem": series.img
     };
+
+    console.log(novaSerie)
 
     // Insere o novo objeto no array
     db.data.push(novaSerie);
@@ -2555,7 +2560,7 @@ function updateSeries(id, series) {
     // Altera os dados do objeto no array
     	db.data[index].nome = series.nome,
         db.data[index].url = series.url,
-        db.data[index].imdbrating = series.imdbrating,
+        db.data[index].imdb_rating = series.imdb_rating,
         db.data[index].lancamento = series.lancamento,
         db.data[index].genero = series.genero,
         db.data[index].atores = series.atores
@@ -2571,7 +2576,7 @@ function updateSeries(id, series) {
     localStorage.setItem('db', JSON.stringify(db));
 }
 
-function deleteSerie(id) {    
+function deleteSeries(id) {    
     // Filtra o array removendo o elemento com o id passado
     db.data = db.data.filter(function (element) { return element.id != id });
 
