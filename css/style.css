@@ -8,14 +8,14 @@ label {
     font-weight: bolder;
 }
 ::placeholder {
-    color: rgb(177, 250, 135) !important;
+    color:black !important;
     opacity: 3;
 }
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:  rgb(177, 250, 135) !important;
+    color: black !important;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:  rgb(177, 250, 135) !important;
+    color: black !important;
     opacity:  3;
  }
  h1 {
@@ -61,5 +61,5 @@ label {
     display: none;
 }
 .red{
-    color: rgb(255, 0, 242);
+    color:red;
 }
