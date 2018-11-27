@@ -166,7 +166,7 @@
                     <div class="modal-footer">
                         <input type="button" class="btn btn-success" id="btnInsert" value="Inserir">
                         <input type="button" class="btn btn-sucess alterar" id="btnUpdate" value="Alterar">
-                        <input type="button" class="btn btn-primary alterar" id="btnDelete" value="Excluir">
+                        <input type="button" class="btn btn-primary alterar" id="btnGoDelete2" value="Excluir">
                         <input type="button" class="btn btn-secondary" id="btnClear" value="Limpar Form">
                     </div>
                 </div>
@@ -274,11 +274,25 @@
             // Popula a tabela com os registros do banco de dados
             for (i = 0; i < db.data.length; i++) {
                 let series = db.data[i];
-                $("#table-series").append(`<tr><td>${series.id}</td><td>${series.nome}</td><td>${series.imdb_rating}</td><td><input type="button" class="btn btn-sucess" onclick="acaoAlterar()" value="Alterar"><input type="button" class="btn btn-primary" onclick="acaoExcluir(${series.id})" value="Excluir"></td></tr>`);
+                $("#table-series").append(`<tr><td>${series.id}</td><td>${series.nome}</td><td>${series.imdb_rating}</td><td><input id="btnUpdate" type="button" class="btn btn-sucess" value="Alterar"><input id="btnDelete" type="button" class="btn btn-primary" value="Excluir"></td></tr>`);
             }
         }
 
         function init() {
+
+            // $(elemento).click(funcao () {
+                
+            // })
+
+            // $(elemento).on(evento, funcao () {
+
+            // })
+
+            // $(container).on(evento, filhos, funcao () {
+
+            // })
+
+
             // Adiciona funções para tratar os eventos 
             $("#btnInsert").click(function () {
                 // Verfica se o formulário está preenchido corretamente
@@ -294,9 +308,10 @@
                 let iGenero = $('#genero').val();
                 let iAtores = $('#atores').val();
                 let iImg = imgb64;
-                console.log(iImg);
                 let series = { nome: iNome, url: iUrl, imdb_rating: iImdbrating, lancamento: iLancamento, genero: iGenero, atores: iAtores, img: iImg };
+
                 insertSeries(series);
+                
                 // Reexibe os contatos
                 exibeSeries();
                 // Limpa o formulario
@@ -304,13 +319,15 @@
                 $('#exampleModal').modal('toggle');
             });
             // Intercepta o click do botão Alterar
-            $("#btnUpdate").click(function () {
+                $("#btnUpdate").click(function () {
+                // $("#table-series").on('click', '#btnUpdate', function () {
                 // Obtem os valores dos campos do formulário
+                // let campoId = $(this).parent().parent()[0].childNodes[0].firstChild.nodeValue; 
                 let campoId = $("#inputId").val();
-                if (campoId == "") {
-                    displayMessage("Selecione uma serie para ser alterada.");
-                    return;
-                }
+                // if (campoId == "") {
+                //     displayMessage("Selecione uma serie para ser alterada.");
+                //     return;
+                // }
                 let iNome = $('#nome').val();
                 let iUrl = $('#url').val();
                 let iImdbrating = $("#imdb_rating").val();
@@ -318,7 +335,7 @@
                 let iGenero = $('#genero').val();
                 let iAtores = $('#atores').val();
                 let iImg = imgb64;
-                console.log(iImg);
+                // console.log(iImg);
                 let series = { nome: iNome, url: iUrl, imdb_rating: iImdbrating, lancamento: iLancamento, genero: iGenero, atores: iAtores, img: iImg };
                 updateSeries(parseInt(campoId), series);
                 // Reexibe os contatos
@@ -327,27 +344,41 @@
                 $("#form-series")[0].reset();
                 $('#exampleModal').modal('toggle');
             });
-            // Intercepta o click do botão Excluir (alterar modal)
-            $("#btnDelete").click(function () {
-                let campoId = $("#inputId").val();
-                if (campoId == "") {
-                    displayMessage("Selecione uma serie a ser excluída.");
-                    return;
-                }
+
+            // Intercepta o click do botão Excluir
+            $("#table-series").on('click', '#btnDelete', function () {
+                let campoId = $(this).parent().parent()[0].childNodes[0].firstChild.nodeValue;                
+
                 deleteSeries(parseInt(campoId));
                 // Reexibe os contatos
                 exibeSeries();
+
                 // Limpa o formulario
-                $("#form-livros")[0].reset();
-                $('#exampleModal').modal('toggle');
+                $("#form-series")[0].reset();
+                // $('#exampleModal').modal('toggle');
             });
-            // Intercepta o click do botão Excluir (visualizar modal)
-            $("#btnGoDelete").click(function () {
-                let campoId = $("#inputIdShow").val();
-                if (campoId == "") {
+
+            // Intercepta o click do botão Excluir (visualizar modal1)
+            $("#btnGoDelete2").click(function () {
+                let id = $("#inputId").val();
+                if (id == "") {
                     return;
                 }
-                deleteSeries(parseInt(campoId));
+                deleteSeries(parseInt(id));
+
+                // Reexibe os contatos
+                exibeSeries();
+                // Fecha o modal
+                $('#exampleModal').modal('toggle');
+            });
+            // Intercepta o click do botão Excluir (visualizar modal2)
+            $("#btnGoDelete").click(function () {
+                let id = $("#inputIdShow").val();
+                if (id == "") {
+                    return;
+                }
+                deleteSeries(parseInt(id));
+
                 // Reexibe os contatos
                 exibeSeries();
                 // Fecha o modal
